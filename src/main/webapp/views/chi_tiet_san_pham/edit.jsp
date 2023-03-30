@@ -6,28 +6,32 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="container">
     <h1 class="text-center">Chi Tiết Sản Phẩm</h1>
-    <form action="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/update?ma=${ctsp.ma}" method="post">
+    <form action="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/update?id${ctsp.id}" method="post">
         <div class="row mt-3">
-            <div class="row mt-3">
-                <div class="col-12">
-                    <label class="form-label">Mã</label>
-                    <input type="text" class="form-control" name="ma" value="${ctsp.ma}" disabled/>
-                </div>
-            </div>
+<%--            <div class="row mt-3">--%>
+<%--                <div class="col-12">--%>
+<%--                    <label class="form-label">Mã</label>--%>
+<%--                    <input type="text" class="form-control" name="ma" value="${ctsp.id}" disabled/>--%>
+<%--                </div>--%>
+<%--            </div>--%>
             <div class="col-6">
                 <label class="form-label">Sản Phẩm</label>
                 <select name="sanPham" class="form-select">
-                    <option value="product_1" ${ctsp.sanPham == "product_1" ? "selected":""}>Sản Phẩm 1</option>
-                    <option value="product_2" ${ctsp.sanPham == "product_2" ? "selected":""}>Sản Phẩm 2</option>
+                    <c:forEach items="${listSanPham}" var="sp">
+                        <option value="${sp.ma}" ${ctsp.sanPham.ma == sp.ma ? "selected":""} >${sp.ten}</option>
+                    </c:forEach>
                 </select>
             </div>
             <div class="col-6">
                 <label class="form-label">Nhà Sản Xuất</label>
                 <select name="nsx" class="form-select">
-                    <option value="vi" ${ctsp.nsx == "vi" ? "selected":""}>Việt Nam</option>
-                    <option value="us" ${ctsp.nsx == "us" ? "selected":""}>Mỹ</option>
+                    <c:forEach items="${listNsx}" var="nsx">
+                        <option value="${nsx.ma}" ${ctsp.nsx.ma == nsx.ma ? "selected":""} >${nsx.ten}</option>
+                    </c:forEach>
                 </select>
             </div>
         </div>
@@ -35,22 +39,24 @@
             <div class="col-6">
                 <label class="form-label">Màu Sắc</label>
                 <select name="mauSac" class="form-select">
-                    <option value="red" ${ctsp.mauSac == "red" ? "selected":""}>đỏ</option>
-                    <option value="blue" ${ctsp.mauSac == "blue" ? "selected":""}>xanh</option>
+                    <c:forEach items="${listMauSac}" var="ms">
+                        <option value="${ms.ma}" ${ctsp.mauSac.ma == ms.ma ? "selected":""} >${ms.ten}</option>
+                    </c:forEach>
                 </select>
             </div>
             <div class="col-6">
                 <label class="form-label">Dòng Sản Phẩm</label>
                 <select name="dongSp" class="form-select">
-                    <option value="A" ${ctsp.dongSp == "A" ? "selected":""}>Loại A</option>
-                    <option value="B" ${ctsp.dongSp == "B" ? "selected":""}>Loại B</option>
+                    <c:forEach items="${listDongSanPham}" var="dongSp">
+                        <option value="${dongSp.ma}" ${ctsp.dongSanPham.ma == dongSp.ma ? "selected":""} >${dongSp.ten}</option>
+                    </c:forEach>
                 </select>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-6">
                 <label class="form-label">Năm Bảo Hành</label>
-                <input type="text" class="form-control" name="namBh" value="${ctsp.namBh}" />
+                <input type="text" class="form-control" name="namBaoHanh" value="${ctsp.namBaoHanh}" />
             </div>
             <div class="col-6">
                 <label class="form-label">Mô tả</label>

@@ -11,12 +11,6 @@
     <h1 class="text-center">Chi Tiết Sản Phẩm</h1>
     <form action="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/store" method="post">
         <div class="row mt-3">
-            <div class="col-12">
-                <label class="form-label">Mã</label>
-                <input type="text" class="form-control" name="ma" />
-            </div>
-        </div>
-        <div class="row mt-3">
             <div class="col-6">
                 <label class="form-label">Sản Phẩm</label>
                 <select name="sanPham" class="form-select">
@@ -31,8 +25,6 @@
                     <c:forEach items="${listNsx}" var="nsx">
                         <option value="${nsx.ma}">${nsx.ten}</option>
                     </c:forEach>
-<%--                    <option value="vi">Việt Nam</option>--%>
-<%--                    <option value="us">Mỹ</option>--%>
                 </select>
             </div>
         </div>
@@ -43,25 +35,21 @@
                     <c:forEach items="${listMauSac}" var="ms">
                         <option value="${ms.ma}">${ms.ten}</option>
                     </c:forEach>
-<%--                    <option value="red">đỏ</option>--%>
-<%--                    <option value="bule">xanh</option>--%>
                 </select>
             </div>
             <div class="col-6">
                 <label class="form-label">Dòng Sản Phẩm</label>
-                <select name="dongSp" class="form-select">
+                <select name="dongSanPham" class="form-select">
                     <c:forEach items="${listDongSanPham}" var="dongSp">
                         <option value="${dongSp.ma}">${dongSp.ten}</option>
                     </c:forEach>
-<%--                    <option value="A">Loại A</option>--%>
-<%--                    <option value="B">Loại B</option>--%>
                 </select>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-6">
                 <label class="form-label">Năm Bảo Hành</label>
-                <input type="text" class="form-control" name="namBh" />
+                <input type="text" class="form-control" name="namBaoHanh" />
             </div>
             <div class="col-6">
                 <label class="form-label">Mô tả</label>

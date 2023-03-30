@@ -1,52 +1,74 @@
 package Repository;
 
-import view_model.QLNSX;
+import DomainModel.NhaSanXuat;
+import Utils.HibernateUtil;
+import jakarta.persistence.TypedQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NsxRepository {
-    private ArrayList<QLNSX> list;
+    private ArrayList<NhaSanXuat> list;
+    private Session hSession;
 
     public NsxRepository() {
         this.list = new ArrayList<>();
-        list.add(new QLNSX("us","Mỹ"));
-        list.add(new QLNSX("vi","Việt Nam"));
+        this.hSession = HibernateUtil.getFACTORY().openSession();
     }
 
-    public void insert(QLNSX nsx) {
-        this.list.add(nsx);
-    }
-
-    public void update(QLNSX nsx) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLNSX item = this.list.get(i);
-            if (item.getMa().equals(nsx.getMa())){
-                this.list.set(i,nsx);
-            }
+    public void insert(NhaSanXuat nsx) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.persist(nsx);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 
-    public void delete(QLNSX nsx) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLNSX item = this.list.get(i);
-            if (item.getMa().equals(nsx.getMa())){
-                this.list.remove(i);
-            }
+    public void update(NhaSanXuat nsx) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.merge(nsx);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 
-    public ArrayList<QLNSX> findAll() {
-        return this.list;
+    public void delete(NhaSanXuat nsx) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.delete(nsx);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
     }
 
-    public QLNSX findByMa(String ma) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLNSX item = this.list.get(i);
-            if (item.getMa().equals(ma)){
-                return this.list.get(i);
-            }
-        }
-        return null;
+    public NhaSanXuat findById(String id) {
+        return this.hSession.find(NhaSanXuat.class, id);
+    }
+
+    public List<NhaSanXuat> findAll() {
+        String hql = "SELECT nsxObj FROM NhaSanXuat nsxObj";
+        TypedQuery<NhaSanXuat> query = this.hSession.createQuery(hql,NhaSanXuat.class);
+        return query.getResultList();
+    }
+
+    public NhaSanXuat findByMa(String ma) {
+        String hql = "SELECT nsxObj FROM NhaSanXuat nsxObj WHERE nsxObj.ma =: ma1";
+        TypedQuery<NhaSanXuat> query = this.hSession.createQuery(hql,NhaSanXuat.class);
+        query.setParameter("ma1", ma);
+        return query.getSingleResult();
     }
 
 }

@@ -33,23 +33,23 @@
             <tbody>
             <c:forEach items="${listctsp}" var="ctsp">
                 <tr class="">
-                    <td scope="row">${ctsp.ma} </td>
-                    <td scope="row">${ctsp.sanPham} </td>
-                    <td scope="row">${ctsp.nsx}</td>
-                    <td scope="row">${ctsp.mauSac}</td>
-                    <td scope="row">${ctsp.dongSp}</td>
-                    <td scope="row">${ctsp.namBh}</td>
+                    <td scope="row">${ctsp.id} </td>
+                    <td scope="row">${ctsp.sanPham.ten} </td>
+                    <td scope="row">${ctsp.nsx.ten}</td>
+                    <td scope="row">${ctsp.mauSac.ten}</td>
+                    <td scope="row">${ctsp.dongSanPham.ten}</td>
+                    <td scope="row">${ctsp.namBaoHanh}</td>
                     <td scope="row">${ctsp.moTa}</td>
                     <td scope="row">${ctsp.soLuongTon}</td>
                     <td scope="row">${ctsp.giaNhap}</td>
                     <td scope="row">${ctsp.giaBan}</td>
                     <td scope="row">
                         <a class="btn btn-primary"
-                           href="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/edit?ma=${ctsp.ma}">
+                           href="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/edit?id=${ctsp.id}">
                             Edit
                         </a>
                         <a class="btn btn-danger"
-                           href="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/delete?ma=${ctsp.ma}">
+                           href="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/delete?id=${ctsp.id}">
                             Delete
                         </a>
                     </td>

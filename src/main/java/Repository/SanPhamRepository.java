@@ -1,52 +1,75 @@
 package Repository;
 
+import DomainModel.SanPham;
+import Utils.HibernateUtil;
+import jakarta.persistence.TypedQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import view_model.QLSanPham;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SanPhamRepository {
     private ArrayList<QLSanPham> list;
+    private Session hSession;
 
     public SanPhamRepository() {
         this.list = new ArrayList<>();
-        list.add(new QLSanPham("SP01","Sản Phẩm 01"));
-        list.add(new QLSanPham("SP02","Sản Phẩm 02"));
+        this.hSession = HibernateUtil.getFACTORY().openSession();
     }
 
-    public void insert(QLSanPham sp) {
-        this.list.add(sp);
-    }
-
-    public void update(QLSanPham sp) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLSanPham item = this.list.get(i);
-            if (item.getMa().equals(sp.getMa())) {
-                this.list.set(i,sp);
-            }
+    public void insert(SanPham sp) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.persist(sp);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 
-    public void delete(QLSanPham sp) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLSanPham item = this.list.get(i);
-            if (item.getMa().equals(sp.getMa())) {
-                this.list.remove(i);
-            }
+    public void update(SanPham sp) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.merge(sp);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 
-    public ArrayList<QLSanPham> findAll() {
-        return this.list;
+    public void delete(SanPham sp) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.delete(sp);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
     }
 
-    public QLSanPham findByMa(String ma) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLSanPham item = this.list.get(i);
-            if (item.getMa().equals(ma)) {
-                return this.list.get(i);
-            }
-        }
-        return null;
+    public SanPham findById(String id) {
+        return this.hSession.find(SanPham.class,id);
+    }
+
+    public List<SanPham> findAll() {
+        String hql = "SELECT spObj FROM SanPham spObj";
+        TypedQuery<SanPham> query = this.hSession.createQuery(hql, SanPham.class);
+        return query.getResultList();
+    }
+
+    public SanPham findByMa(String ma) {
+        String hql = "SELECT spObj FROM SanPham spObj WHERE spObj.ma =: ma1";
+        TypedQuery<SanPham> query = this.hSession.createQuery(hql, SanPham.class);
+        query.setParameter("ma1",ma);
+        return query.getSingleResult();
     }
 
 }

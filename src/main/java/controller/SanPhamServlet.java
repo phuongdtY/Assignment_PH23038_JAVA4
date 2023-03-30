@@ -1,5 +1,6 @@
 package controller;
 
+import DomainModel.SanPham;
 import Repository.SanPhamRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,8 +49,8 @@ public class SanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLSanPham sp = this.spRepo.findByMa(ma);
-        request.setAttribute("sp",sp);
+        SanPham DomainModelsp = this.spRepo.findByMa(ma);
+        request.setAttribute("sp",DomainModelsp);
         request.setAttribute("view","/views/san_pham/edit.jsp");
         request.getRequestDispatcher("/views/layout.jsp")
                 .forward(request,response);
@@ -60,8 +61,8 @@ public class SanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLSanPham sp = this.spRepo.findByMa(ma);
-        this.spRepo.delete(sp);
+        SanPham DomainModelsp = this.spRepo.findByMa(ma);
+        this.spRepo.delete(DomainModelsp);
         response.sendRedirect("/Assignment_PH23038_war_exploded/san-pham/index");
     }
 
@@ -104,9 +105,9 @@ public class SanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         try {
-            QLSanPham qlsp = new QLSanPham();
-            BeanUtils.populate(qlsp, request.getParameterMap());
-            this.spRepo.insert(qlsp);
+            SanPham DomainModelsp = new SanPham();
+            BeanUtils.populate(DomainModelsp, request.getParameterMap());
+            this.spRepo.insert(DomainModelsp);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,9 +119,10 @@ public class SanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         try {
-            QLSanPham qlsp = new QLSanPham();
-            BeanUtils.populate(qlsp, request.getParameterMap());
-            this.spRepo.update(qlsp);
+            String ma = request.getParameter("ma");
+            SanPham DomainModelsp = this.spRepo.findByMa(ma);
+            BeanUtils.populate(DomainModelsp, request.getParameterMap());
+            this.spRepo.update(DomainModelsp);
         } catch (Exception e) {
             e.printStackTrace();
         }

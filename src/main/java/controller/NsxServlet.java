@@ -1,5 +1,6 @@
 package controller;
 
+import DomainModel.NhaSanXuat;
 import Repository.NsxRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -49,8 +50,8 @@ public class NsxServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("maNsx");
-        QLNSX nsx = this.nsxRepo.findByMa(ma);
-        request.setAttribute("nsx",nsx);
+        NhaSanXuat DomainModelnsx = this.nsxRepo.findByMa(ma);
+        request.setAttribute("nsx",DomainModelnsx);
         request.setAttribute("view","/views/nsx/edit.jsp");
         request.getRequestDispatcher("/views/layout.jsp")
                 .forward(request,response);
@@ -61,8 +62,8 @@ public class NsxServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("maNsx");
-        QLNSX nsx = this.nsxRepo.findByMa(ma);
-        this.nsxRepo.delete(nsx);
+        NhaSanXuat DomainModelnsx = this.nsxRepo.findByMa(ma);
+        this.nsxRepo.delete(DomainModelnsx);
         response.sendRedirect("/Assignment_PH23038_war_exploded/nsx/index");
     }
 
@@ -105,9 +106,9 @@ public class NsxServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         try {
-            QLNSX qlnsx = new QLNSX();
-            BeanUtils.populate(qlnsx,request.getParameterMap());
-            this.nsxRepo.insert(qlnsx);
+            NhaSanXuat DomainModelnsx = new NhaSanXuat();
+            BeanUtils.populate(DomainModelnsx,request.getParameterMap());
+            this.nsxRepo.insert(DomainModelnsx);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,9 +120,10 @@ public class NsxServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         try {
-            QLNSX qlnsx = new QLNSX();
-            BeanUtils.populate(qlnsx,request.getParameterMap());
-            this.nsxRepo.update(qlnsx);
+            String ma = request.getParameter("ma");
+            NhaSanXuat DomainModelnsx = this.nsxRepo.findByMa(ma);
+            BeanUtils.populate(DomainModelnsx,request.getParameterMap());
+            this.nsxRepo.update(DomainModelnsx);
         } catch (Exception e) {
             e.printStackTrace();
         }

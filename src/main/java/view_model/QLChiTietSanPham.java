@@ -9,12 +9,11 @@ import lombok.*;
 @ToString
 
 public class QLChiTietSanPham {
-    private String ma;
     private String sanPham;
     private String nsx;
     private String mauSac;
     private String dongSp;
-    private String namBh;
+    private String namBaoHanh;
     private String moTa;
     private String soLuongTon;
     private String giaNhap;

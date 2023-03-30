@@ -1,5 +1,6 @@
 package controller;
 
+import DomainModel.DongSanPham;
 import Repository.DongSpRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,8 +58,8 @@ public class DongSanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLDongSP dongSP = this.dongSpRepo.findByMa(ma);
-        request.setAttribute("dongSp",dongSP);
+        DongSanPham DomainModeldongSP = this.dongSpRepo.findByMa(ma);
+        request.setAttribute("dongSp",DomainModeldongSP);
         request.setAttribute("view","/views/dong_san_pham/edit.jsp");
         request.getRequestDispatcher("/views/layout.jsp")
                 .forward(request,response);
@@ -69,8 +70,8 @@ public class DongSanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLDongSP dongSP = this.dongSpRepo.findByMa(ma);
-        this.dongSpRepo.delete(dongSP);
+        DongSanPham DomainModeldongSP = this.dongSpRepo.findByMa(ma);
+        this.dongSpRepo.delete(DomainModeldongSP);
         response.sendRedirect("/Assignment_PH23038_war_exploded/dong-san-pham/index");
     }
 
@@ -104,9 +105,9 @@ public class DongSanPhamServlet extends HttpServlet {
     ) throws ServletException, IOException {
 
         try {
-            QLDongSP qldongsp = new QLDongSP();
-            BeanUtils.populate(qldongsp,request.getParameterMap());
-            this.dongSpRepo.insert(qldongsp);
+            DongSanPham DomainModeldongSP = new DongSanPham();
+            BeanUtils.populate(DomainModeldongSP,request.getParameterMap());
+            this.dongSpRepo.insert(DomainModeldongSP);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,9 +120,10 @@ public class DongSanPhamServlet extends HttpServlet {
     ) throws ServletException, IOException {
 
         try {
-            QLDongSP qldongsp = new QLDongSP();
-            BeanUtils.populate(qldongsp,request.getParameterMap());
-            this.dongSpRepo.update(qldongsp);
+            String ma = request.getParameter("ma");
+            DongSanPham DomainModeldongSP = this.dongSpRepo.findByMa(ma);
+            BeanUtils.populate(DomainModeldongSP,request.getParameterMap());
+            this.dongSpRepo.update(DomainModeldongSP);
         } catch (Exception e) {
             e.printStackTrace();
         }

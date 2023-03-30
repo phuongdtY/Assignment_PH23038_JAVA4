@@ -1,52 +1,75 @@
 package Repository;
 
+import DomainModel.ChiTietSanPham;
+import Utils.HibernateUtil;
+import jakarta.persistence.TypedQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import view_model.QLChiTietSanPham;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class ChiTietSanPhamRepository {
     private ArrayList<QLChiTietSanPham> list;
+    private Session hSession;
 
     public ChiTietSanPhamRepository(){
         this.list = new ArrayList<>();
-        list.add(new QLChiTietSanPham("PH001","product_1","vi","red","A","3","mới zin","15","150000","200000"));
-        list.add(new QLChiTietSanPham("PH002","product_2","us","blue","B","2","mới zun","5","150000","300000"));
-    }
+        this.hSession = HibernateUtil.getFACTORY().openSession();
+        }
 
-    public void insert(QLChiTietSanPham ctsp) {
-        this.list.add(ctsp);
-    }
-
-    public void update(QLChiTietSanPham ctsp) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLChiTietSanPham item = this.list.get(i);
-            if (item.getMa().equals(ctsp.getMa())){
-                this.list.set(i,ctsp);
-            }
+    public void insert(ChiTietSanPham ctsp) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.persist(ctsp);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 
-    public void delete(QLChiTietSanPham ctsp) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLChiTietSanPham item = this.list.get(i);
-            if (item.getMa().equals(ctsp.getMa())){
-                this.list.remove(i);
-            }
+    public void update(ChiTietSanPham ctsp) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.merge(ctsp);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 
-    public ArrayList<QLChiTietSanPham> finAll() {
-        return this.list;
+    public void delete(ChiTietSanPham ctsp) {
+        Transaction transaction = this.hSession.getTransaction();
+        try {
+            transaction.begin();
+            this.hSession.delete(ctsp);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
     }
 
-    public QLChiTietSanPham findByMa(String ma) {
-        for (int i = 0; i < this.list.size(); i++) {
-            QLChiTietSanPham item = this.list.get(i);
-            if (item.getMa().equals(ma)){
-                return this.list.get(i);
-            }
-        }
+    public ChiTietSanPham findById(UUID id) {
+        return this.hSession.find(ChiTietSanPham.class,id);
+    }
 
-        return null;
+    public List<ChiTietSanPham> finAll() {
+        String hql = "SELECT ctspObj FROM ChiTietSanPham ctspObj";
+        TypedQuery<ChiTietSanPham> query = this.hSession.createQuery(hql,ChiTietSanPham.class);
+        return query.getResultList();
+    }
+
+    public ChiTietSanPham findByTen(String ten) {
+        String hql = "SELECT ctspObj FROM ChiTietSanPham ctspObj WHERE ctspObj.sanPham.ten =: ten1 ";
+        TypedQuery<ChiTietSanPham> query = this.hSession.createQuery(hql,ChiTietSanPham.class);
+        query.setParameter("ten1",ten);
+        return query.getSingleResult();
     }
 }
