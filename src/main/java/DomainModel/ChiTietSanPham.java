@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -54,5 +55,11 @@ public class ChiTietSanPham{
 
     @Column (name = "GiaBan")
     private BigDecimal giaBan;
+
+    @OneToMany (mappedBy = "chiTietSp",fetch = FetchType.LAZY)
+    List<GioHangChiTiet> listGioHangChiTiet;
+
+    @OneToMany (mappedBy = "chiTietSpHoaDon",fetch = FetchType.LAZY)
+    List<HoaDonChiTiet> listHoaDonChiTiet;
 
 }

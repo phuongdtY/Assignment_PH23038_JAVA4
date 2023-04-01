@@ -7,7 +7,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import view_model.QLChucVu;
 
 import java.io.IOException;
@@ -100,6 +106,21 @@ public class ChucVuServlet extends HttpServlet {
         }
 
     }
+//    @RequestMapping(value = "/Assignment_PH23038_war_exploded/chuc-vu/create",
+//            method = RequestMethod.POST)
+//    public ModelAndView submit(@Valid @ModelAttribute("chucVu") ChucVu chucVu,
+//                               BindingResult result) {
+//
+//        if (result.hasErrors()) {
+//            return new ModelAndView("employeeForm");
+//        }
+//
+//        // Lưu thông tin employee vào cơ sở dữ liệu
+//        ChucVu DomainModeCv = new ChucVu();
+//        this.cvRepo.insert(DomainModeCv);
+//
+//        return new ModelAndView("employeeSuccess");
+//    }
 
     protected void store(
             HttpServletRequest request,

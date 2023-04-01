@@ -16,8 +16,8 @@ import java.util.UUID;
 @Setter
 
 @Entity
-@Table (name = "HoaDon")
-public class HoaDon {
+@Table (name = "GioHang")
+public class GioHang {
     @Id
     @Column (name = "Id")
     @GeneratedValue (strategy = GenerationType.UUID)
@@ -28,26 +28,17 @@ public class HoaDon {
     private KhachHang khachHang;
 
     @ManyToOne
-    @JoinColumn (name = "IdNv", nullable = false)
+    @JoinColumn (name = "IdNV", nullable = false)
     private NhanVien nhanVien;
 
     @Column (name = "Ma")
     private String ma;
 
-    @Column  (name = "NgayTao")
+    @Column (name = "NgayTao")
     private Date ngayTao;
 
     @Column (name = "NgayThanhToan")
     private Date ngayThanhToan;
-
-    @Column (name = "NgayShip")
-    private Date ngayShip;
-
-    @Column (name = "NgayNhan")
-    private Date ngayNhan;
-
-    @Column (name = "TinhTrang")
-    private int tinhTrang;
 
     @Column (name = "TenNguoiNhan")
     private String tenNguoiNhan;
@@ -58,7 +49,9 @@ public class HoaDon {
     @Column (name = "Sdt")
     private String sdt;
 
-    @OneToMany (mappedBy = "hoaDon", fetch = FetchType.LAZY)
-    List<HoaDonChiTiet> listHoaDonChiTiet;
+    @Column (name = "TrangThai")
+    private int trangThai;
 
+    @OneToMany (mappedBy = "gioHang", fetch = FetchType.LAZY)
+    List<GioHangChiTiet> listGioHangChiTiet;
 }

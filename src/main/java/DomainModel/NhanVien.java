@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -65,5 +66,8 @@ public class NhanVien {
 
     @Column (name = "TrangThai")
     private int trangThai;
+
+    @OneToMany (mappedBy = "nhanVien", fetch = FetchType.LAZY)
+    List<GioHang> listGioHang;
 
 }

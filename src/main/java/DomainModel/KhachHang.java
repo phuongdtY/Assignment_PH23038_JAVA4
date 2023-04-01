@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -53,4 +54,8 @@ public class KhachHang{
 
     @Column(name = "MatKhau")
     private String matKhau;
+
+    @OneToMany (mappedBy = "khachHang", fetch = FetchType.LAZY)
+    List<GioHang> listGioHang;
+
 }
