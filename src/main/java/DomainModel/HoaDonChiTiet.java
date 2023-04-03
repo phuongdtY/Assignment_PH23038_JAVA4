@@ -20,12 +20,12 @@ public class HoaDonChiTiet implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn (name = "IdHoaDon")
+    @JoinColumn (name = "IdHoaDon", nullable = false)
     private HoaDon hoaDon;
 
     @Id
     @ManyToOne
-    @JoinColumn (name = "IdChiTietSP")
+    @JoinColumn (name = "IdChiTietSP", nullable = false)
     private ChiTietSanPham chiTietSpHoaDon;
 
     @Column (name = "SoLuong")

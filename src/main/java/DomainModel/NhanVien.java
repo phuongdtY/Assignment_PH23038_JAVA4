@@ -70,4 +70,7 @@ public class NhanVien {
     @OneToMany (mappedBy = "nhanVien", fetch = FetchType.LAZY)
     List<GioHang> listGioHang;
 
+    @OneToMany (mappedBy = "nhanVienHoaDon", fetch = FetchType.LAZY)
+    List<HoaDon> listHoaDon;
+
 }

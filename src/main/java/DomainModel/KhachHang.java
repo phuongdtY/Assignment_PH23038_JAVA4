@@ -58,4 +58,7 @@ public class KhachHang{
     @OneToMany (mappedBy = "khachHang", fetch = FetchType.LAZY)
     List<GioHang> listGioHang;
 
+    @OneToMany (mappedBy = "khachHangHoaDon", fetch = FetchType.LAZY)
+    List<HoaDon> listHoaDon;
+
 }
