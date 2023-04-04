@@ -6,6 +6,7 @@ import DomainModel.NhanVien;
 import Repository.ChucVuRepository;
 import Repository.CuaHangRepository;
 import Repository.NhanVienRepository;
+import jakarta.persistence.TypedQuery;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -59,8 +60,8 @@ public class NhanVienServlet extends HttpServlet {
     ) throws ServletException, IOException {
         request.setAttribute("listCuaHang",chRepo.findAll());
         request.setAttribute("listChucVu",cvRepo.findAll());
-        String ma = request.getParameter("ma");
-        NhanVien DomainModelNv = this.nvRepo.findByMa(ma);
+        String id = request.getParameter("id");
+        NhanVien DomainModelNv = this.nvRepo.findById(id);
         request.setAttribute("nv",DomainModelNv);
         request.setAttribute("view","/views/nhan_vien/edit.jsp");
         request.getRequestDispatcher("/views/layout.jsp")
@@ -71,8 +72,8 @@ public class NhanVienServlet extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        NhanVien DomainModelNv = this.nvRepo.findByMa(ma);
+        String id = request.getParameter("id");
+        NhanVien DomainModelNv = this.nvRepo.findById(id);
         this.nvRepo.delete(DomainModelNv);
         response.sendRedirect("/Assignment_PH23038_war_exploded/nhan-vien/index");
     }
@@ -123,10 +124,10 @@ public class NhanVienServlet extends HttpServlet {
             e.printStackTrace();
         }
         NhanVien DomainModelNv = new NhanVien();
-        String maCv = request.getParameter("chucVu");
-        String maCh = request.getParameter("cuaHang");
-        ChucVu DomainModelCv = this.cvRepo.findByMa(maCv);
-        CuaHang DomainModelCh = this.chRepo.findByMa(maCh);
+        String idCv = request.getParameter("chucVu");
+        String idCh = request.getParameter("cuaHang");
+        ChucVu DomainModelCv = this.cvRepo.findById(idCv);
+        CuaHang DomainModelCh = this.chRepo.findById(idCh);
 
         DomainModelNv.setMa(nv.getMa());
         DomainModelNv.setTen(nv.getTen());
@@ -146,7 +147,7 @@ public class NhanVienServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/Assignment_PH23038_war_exploded/nhan-vien/index?chucVu=" + maCv + "?cuaHang=" +maCh);
+        response.sendRedirect("/Assignment_PH23038_war_exploded/nhan-vien/index");
     }
 
     protected void update(
@@ -167,14 +168,14 @@ public class NhanVienServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String ma = request.getParameter("ma");
-        NhanVien DomainModelNv = this.nvRepo.findByMa(ma);
-        String maCv = request.getParameter("chucVu");
-        String maCh = request.getParameter("cuaHang");
-        ChucVu DomainModelCv = this.cvRepo.findByMa(maCv);
-        CuaHang DomainModelCh = this.chRepo.findByMa(maCh);
+        String id = request.getParameter("id");
+        NhanVien DomainModelNv = this.nvRepo.findById(id);
+        String idCv = request.getParameter("chucVu");
+        String idCh = request.getParameter("cuaHang");
+        ChucVu DomainModelCv = this.cvRepo.findById(idCv);
+        CuaHang DomainModelCh = this.chRepo.findById(idCh);
 
-        DomainModelNv.setMa(nv.getMa());
+//        DomainModelNv.setMa(nv.getMa());
         DomainModelNv.setTen(nv.getTen());
         DomainModelNv.setTenDem(nv.getTenDem());
         DomainModelNv.setHo(nv.getHo());
@@ -194,5 +195,7 @@ public class NhanVienServlet extends HttpServlet {
         }
         response.sendRedirect("/Assignment_PH23038_war_exploded/nhan-vien/index");
     }
+
+
 
 }

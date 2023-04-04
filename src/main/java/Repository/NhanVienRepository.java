@@ -2,6 +2,7 @@ package Repository;
 
 import DomainModel.NhanVien;
 import Utils.HibernateUtil;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -70,4 +71,19 @@ public class NhanVienRepository {
         query.setParameter("ma1",ma);
         return query.getSingleResult();
     }
+
+    public NhanVien login(String ma, String matKhau) {
+        String hql = "SELECT nvObj FROM NhanVien nvObj WHERE nvObj.ma = ?1 AND nvObj.matKhau = ?2";
+        TypedQuery<NhanVien> query = this.hSession.createQuery(hql, NhanVien.class);
+        query.setParameter(1,ma);
+        query.setParameter(2,matKhau);
+        try {
+            NhanVien nv = query.getSingleResult();
+            return nv;
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

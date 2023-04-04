@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="table-responsive">
+    <div class="form-label text-center h1"> Nhân Viên</div>
     <a class="btn btn-primary " href="/Assignment_PH23038_war_exploded/nhan-vien/create">Add</a>
     <table class="table table-dark">
         <thead>
@@ -44,10 +45,10 @@
                     <td scope="row">${nv.idGuiBaoCao}</td>
                     <td scope="row">${nv.trangThai == 0 ? "Đã nghỉ":"Đang làm"}</td>
                     <td scope="row">
-                        <a class="btn btn-primary" href="/Assignment_PH23038_war_exploded/nhan-vien/edit?ma=${nv.ma}">
+                        <a class="btn btn-primary" href="/Assignment_PH23038_war_exploded/nhan-vien/edit?id=${nv.id}">
                             Edit
                         </a>
-                        <a class="btn btn-danger" href="/Assignment_PH23038_war_exploded/nhan-vien/delete?ma=${nv.ma}">
+                        <a class="btn btn-danger" href="/Assignment_PH23038_war_exploded/nhan-vien/delete?id=${nv.id}">
                             Delete
                         </a>
                     </td>

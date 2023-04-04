@@ -10,6 +10,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="table-responsive">
+    <div class="form-label text-center h1"> Cửa hàng</div>
     <a class="btn btn-primary " href="/Assignment_PH23038_war_exploded/cua-hang/create">Add</a>
     <table class="table table-dark">
         <thead>

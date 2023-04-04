@@ -1,30 +1,26 @@
 package Repository;
 
-import DomainModel.ChiTietSanPham;
+import DomainModel.GioHang;
 import Utils.HibernateUtil;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import view_model.QLChiTietSanPham;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ChiTietSanPhamRepository {
-    private ArrayList<QLChiTietSanPham> list;
+public class GioHangRepository {
     private Session hSession;
 
-    public ChiTietSanPhamRepository(){
-        this.list = new ArrayList<>();
+    public GioHangRepository() {
         this.hSession = HibernateUtil.getFACTORY().openSession();
-        }
+    }
 
-    public void insert(ChiTietSanPham ctsp) {
+    public void insert(GioHang gh) {
         Transaction transaction = this.hSession.getTransaction();
         try {
             transaction.begin();
-            this.hSession.persist(ctsp);
+            this.hSession.persist(gh);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,11 +28,11 @@ public class ChiTietSanPhamRepository {
         }
     }
 
-    public void update(ChiTietSanPham ctsp) {
+    public void update(GioHang gh) {
         Transaction transaction = this.hSession.getTransaction();
         try {
             transaction.begin();
-            this.hSession.merge(ctsp);
+            this.hSession.merge(gh);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,11 +40,11 @@ public class ChiTietSanPhamRepository {
         }
     }
 
-    public void delete(ChiTietSanPham ctsp) {
+    public void delete(GioHang gh) {
         Transaction transaction = this.hSession.getTransaction();
         try {
             transaction.begin();
-            this.hSession.delete(ctsp);
+            this.hSession.delete(gh);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,20 +52,20 @@ public class ChiTietSanPhamRepository {
         }
     }
 
-    public ChiTietSanPham findById(String id) {
-        return this.hSession.find(ChiTietSanPham.class,id);
+    public GioHang findById(UUID id) {
+        return this.hSession.find(GioHang.class, id);
     }
 
-    public List<ChiTietSanPham> finAll() {
-        String hql = "SELECT ctspObj FROM ChiTietSanPham ctspObj";
-        TypedQuery<ChiTietSanPham> query = this.hSession.createQuery(hql,ChiTietSanPham.class);
+    public List<GioHang> findAll() {
+        String hql = "SELECT ghObj FROM GioHang ghObj";
+        TypedQuery<GioHang> query = this.hSession.createQuery(hql, GioHang.class);
         return query.getResultList();
     }
 
-    public ChiTietSanPham findByTen(String ten) {
-        String hql = "SELECT ctspObj FROM ChiTietSanPham ctspObj WHERE ctspObj.sanPham.ten =: ten1 ";
-        TypedQuery<ChiTietSanPham> query = this.hSession.createQuery(hql,ChiTietSanPham.class);
-        query.setParameter("ten1",ten);
+    public GioHang findByMa(String ma) {
+        String hql = "SELECT ghObj FROM GioHang ghObj WHERE ghObj.ma =: ma";
+        TypedQuery<GioHang> query = this.hSession.createQuery(hql, GioHang.class);
+        query.setParameter("ma", ma);
         return query.getSingleResult();
     }
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,24 +22,25 @@ import java.util.UUID;
 @Table (name = "ChiTietSP")
 public class ChiTietSanPham{
     @Id
-    @Column (name = "Id")
-    @GeneratedValue (strategy = GenerationType.UUID)
-    private UUID id;
+    @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
+    @GeneratedValue(generator = "generator")
+    @Column(name = "Id" , columnDefinition="uniqueidentifier")
+    private String id;
 
     @ManyToOne
-    @JoinColumn (name = "IdSP", nullable = false)
+    @JoinColumn (name = "IdSP")
     private SanPham sanPham;
 
     @ManyToOne
-    @JoinColumn (name = "IdNsx", nullable = false)
+    @JoinColumn (name = "IdNsx")
     private NhaSanXuat nsx;
 
     @ManyToOne
-    @JoinColumn (name = "IdMauSac", nullable = false)
+    @JoinColumn (name = "IdMauSac")
     private MauSac mauSac;
 
     @ManyToOne
-    @JoinColumn (name = "IdDongSP", nullable = false)
+    @JoinColumn (name = "IdDongSP")
     private DongSanPham dongSanPham;
 
     @Column (name = "NamBH")

@@ -11,7 +11,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="container">
     <h1 class="text-center">Nhân viên</h1>
-    <form action="/Assignment_PH23038_war_exploded/nhan-vien/update?ma=${nv.ma}" method="post">
+    <form action="/Assignment_PH23038_war_exploded/nhan-vien/update?id=${nv.id}" method="post">
         <div class="row mt-3">
             <div class="col-6">
                 <label class="form-label">Mã</label>
@@ -73,7 +73,7 @@
                 <label class="form-label">Cửa hàng</label>
                 <select name="cuaHang" class="form-select">
                     <c:forEach items="${listCuaHang}" var="ch">
-                        <option value="${ch.ma}" ${nv.cuaHang.ma == ch.ma ? "selected":""}>${ch.ten}</option>
+                        <option value="${ch.id}" ${nv.cuaHang.id == ch.id ? "selected":""}>${ch.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -87,7 +87,7 @@
                 <label class="form-label">Chức vụ</label>
                 <select name="chucVu" class="form-select">
                     <c:forEach items="${listChucVu}" var="cv">
-                        <option value="${cv.ma}" ${nv.chucVu.ma == cv.ma ? "selected":""}>${cv.ten}</option>
+                        <option value="${cv.id}" ${nv.chucVu.id == cv.id ? "selected":""}>${cv.ten}</option>
                     </c:forEach>
                 </select>
             </div>

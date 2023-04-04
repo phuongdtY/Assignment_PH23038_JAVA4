@@ -26,9 +26,9 @@
              <a class="navbar-brand" href="#">Đặng Thanh Phương</a>
              <div class="collapse navbar-collapse" id="navbarSupportedContent">
                  <ul class="navbar-nav me-auto mb-0 mb-lg-0">
-                     <li class="nav-item">
-                         <a class="nav-link active" aria-current="page" href="#">Trang chủ</a>
-                     </li>
+<%--                     <li class="nav-item">--%>
+<%--                         <a class="nav-link active" aria-current="page" href="#">Trang chủ</a>--%>
+<%--                     </li>--%>
                      <li class="nav-item dropdown">
                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                              Quản lý khách hàng
@@ -58,6 +58,9 @@
                              <li><a class="dropdown-item" href="/Assignment_PH23038_war_exploded/dong-san-pham/index">Dòng sản phẩm</a></li>
                              <li><a class="dropdown-item" href="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/index">Chi tiết sản phẩm</a></li>
                          </ul>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link active" href="/Assignment_PH23038_war_exploded/ban-hang/create"> Bán hàng</a>
                      </li>
                  </ul>
              </div>

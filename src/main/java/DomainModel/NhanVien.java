@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import java.sql.Date;
@@ -21,9 +22,10 @@ import java.util.UUID;
 public class NhanVien {
 
     @Id
-    @Column (name = "Id")
-    @GeneratedValue (strategy = GenerationType.UUID)
-    private UUID id;
+    @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
+    @GeneratedValue(generator = "generator")
+    @Column(name = "Id" , columnDefinition="uniqueidentifier")
+    private String id;
 
     @Column (name = "Ma")
     private String ma;

@@ -24,11 +24,11 @@ public class HoaDon {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn (name = "IdKH", nullable = false)
+    @JoinColumn (name = "IdKH")
     private KhachHang khachHangHoaDon;
 
     @ManyToOne
-    @JoinColumn (name = "IdNv", nullable = false)
+    @JoinColumn (name = "IdNv")
     private NhanVien nhanVienHoaDon;
 
     @Column (name = "Ma")

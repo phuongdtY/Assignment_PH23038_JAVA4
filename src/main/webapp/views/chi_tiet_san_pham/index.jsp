@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="table-responsive">
+    <div class="form-label text-center h1"> Chi Tiết Sản Phẩm</div>
     <a class="btn btn-primary " href="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/create">Add</a>
     <table class="table table-dark">
         <thead>
@@ -34,7 +35,7 @@
             <c:forEach items="${listctsp}" var="ctsp">
                 <tr class="">
                     <td scope="row">${ctsp.id} </td>
-                    <td scope="row">${ctsp.sanPham.ten} </td>
+                    <td scope="row">${ctsp.sanPham.ten}</td>
                     <td scope="row">${ctsp.nsx.ten}</td>
                     <td scope="row">${ctsp.mauSac.ten}</td>
                     <td scope="row">${ctsp.dongSanPham.ten}</td>

@@ -10,7 +10,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="container">
     <h1 class="text-center">Chi Tiết Sản Phẩm</h1>
-    <form action="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/update?id${ctsp.id}" method="post">
+    <form action="/Assignment_PH23038_war_exploded/chi-tiet-san-pham/update?id=${ctsp.id}" method="post">
         <div class="row mt-3">
 <%--            <div class="row mt-3">--%>
 <%--                <div class="col-12">--%>
@@ -22,7 +22,7 @@
                 <label class="form-label">Sản Phẩm</label>
                 <select name="sanPham" class="form-select">
                     <c:forEach items="${listSanPham}" var="sp">
-                        <option value="${sp.ma}" ${ctsp.sanPham.ma == sp.ma ? "selected":""} >${sp.ten}</option>
+                        <option value="${sp.id}" ${ctsp.sanPham.id == sp.id ? "selected":""} >${sp.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -30,7 +30,7 @@
                 <label class="form-label">Nhà Sản Xuất</label>
                 <select name="nsx" class="form-select">
                     <c:forEach items="${listNsx}" var="nsx">
-                        <option value="${nsx.ma}" ${ctsp.nsx.ma == nsx.ma ? "selected":""} >${nsx.ten}</option>
+                        <option value="${nsx.id}" ${ctsp.nsx.id == nsx.id ? "selected":""} >${nsx.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -40,7 +40,7 @@
                 <label class="form-label">Màu Sắc</label>
                 <select name="mauSac" class="form-select">
                     <c:forEach items="${listMauSac}" var="ms">
-                        <option value="${ms.ma}" ${ctsp.mauSac.ma == ms.ma ? "selected":""} >${ms.ten}</option>
+                        <option value="${ms.id}" ${ctsp.mauSac.id == ms.id ? "selected":""} >${ms.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -48,7 +48,7 @@
                 <label class="form-label">Dòng Sản Phẩm</label>
                 <select name="dongSp" class="form-select">
                     <c:forEach items="${listDongSanPham}" var="dongSp">
-                        <option value="${dongSp.ma}" ${ctsp.dongSanPham.ma == dongSp.ma ? "selected":""} >${dongSp.ten}</option>
+                        <option value="${dongSp.id}" ${ctsp.dongSanPham.id == dongSp.id ? "selected":""} >${dongSp.ten}</option>
                     </c:forEach>
                 </select>
             </div>

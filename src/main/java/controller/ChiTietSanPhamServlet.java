@@ -60,8 +60,8 @@ public class ChiTietSanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String idStr = request.getParameter("id");
-        UUID id = UUID.fromString(idStr);
-        ChiTietSanPham DomainModelctsp = this.ctspRepo.findById(id);
+//        UUID id = UUID.fromString(idStr);
+        ChiTietSanPham DomainModelctsp = this.ctspRepo.findById(idStr);
         request.setAttribute("listSanPham",sanPhamRepo.findAll());
         request.setAttribute("listNsx",nsxRepo.findAll());
         request.setAttribute("listMauSac",msRepo.findAll());
@@ -77,8 +77,8 @@ public class ChiTietSanPhamServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
         String idStr = request.getParameter("id");
-        UUID id = UUID.fromString(idStr);
-        ChiTietSanPham DomainModelctsp = this.ctspRepo.findById(id);
+//        UUID id = UUID.fromString(idStr);
+        ChiTietSanPham DomainModelctsp = this.ctspRepo.findById(idStr);
         this.ctspRepo.delete(DomainModelctsp);
         response.sendRedirect("/Assignment_PH23038_war_exploded/chi-tiet-san-pham/index");
     }
@@ -133,15 +133,15 @@ public class ChiTietSanPhamServlet extends HttpServlet {
         }
         ChiTietSanPham DomainModelctsp = new ChiTietSanPham();
 
-        String maSp = request.getParameter("sanPham");
-        String maDongSp = request.getParameter("dongSanPham");
-        String maNsx = request.getParameter("nsx");
-        String maMs = request.getParameter("mauSac");
+        String idSp = request.getParameter("sanPham");
+        String idDongSp = request.getParameter("dongSp");
+        String idNsx = request.getParameter("nsx");
+        String idMs = request.getParameter("mauSac");
 
-        NhaSanXuat nsx = this.nsxRepo.findByMa(maNsx);
-        MauSac mauSac = this.msRepo.findByMa(maMs);
-        DongSanPham dongSanPham = this.dongSpRepo.findByMa(maDongSp);
-        SanPham sanPham = this.sanPhamRepo.findByMa(maSp);
+        NhaSanXuat nsx = this.nsxRepo.findById(idNsx);
+        MauSac mauSac = this.msRepo.findById(idMs);
+        DongSanPham dongSanPham = this.dongSpRepo.findById(idDongSp);
+        SanPham sanPham = this.sanPhamRepo.findById(idSp);
 
         DomainModelctsp.setSanPham(sanPham);
         DomainModelctsp.setNsx(nsx);
@@ -157,7 +157,7 @@ public class ChiTietSanPhamServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/Assignment_PH23038_war_exploded/chi-tiet-san-pham/index?sanPham="+maSp+"?dongSanPham="+maDongSp+"?nsx="+maNsx+"?mauSac="+maMs);
+        response.sendRedirect("/Assignment_PH23038_war_exploded/chi-tiet-san-pham/index");
     }
 
     protected void update(
@@ -172,18 +172,18 @@ public class ChiTietSanPhamServlet extends HttpServlet {
             e.printStackTrace();
         }
         String idStr = request.getParameter("id");
-        UUID id = UUID.fromString(idStr);
-        ChiTietSanPham DomainModelctsp = this.ctspRepo.findById(id);
+//        UUID id = UUID.fromString(idStr);
+        ChiTietSanPham DomainModelctsp = this.ctspRepo.findById(idStr);
 
-        String maSp = request.getParameter("sanPham");
-        String maDongSp = request.getParameter("dongSanPham");
-        String maNsx = request.getParameter("nsx");
-        String maMs = request.getParameter("mauSac");
+        String idSp = request.getParameter("sanPham");
+        String idDongSp = request.getParameter("dongSp");
+        String idNsx = request.getParameter("nsx");
+        String idMs = request.getParameter("mauSac");
 
-        NhaSanXuat nsx = this.nsxRepo.findByMa(maNsx);
-        MauSac mauSac = this.msRepo.findByMa(maMs);
-        DongSanPham dongSanPham = this.dongSpRepo.findByMa(maDongSp);
-        SanPham sanPham = this.sanPhamRepo.findByMa(maSp);
+        NhaSanXuat nsx = this.nsxRepo.findById(idNsx);
+        MauSac mauSac = this.msRepo.findById(idMs);
+        DongSanPham dongSanPham = this.dongSpRepo.findById(idDongSp);
+        SanPham sanPham = this.sanPhamRepo.findById(idSp);
 
         DomainModelctsp.setSanPham(sanPham);
         DomainModelctsp.setNsx(nsx);

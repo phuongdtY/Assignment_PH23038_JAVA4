@@ -15,7 +15,7 @@
                 <label class="form-label">Sản Phẩm</label>
                 <select name="sanPham" class="form-select">
                     <c:forEach items="${listSanPham}" var="sp">
-                        <option value="${sp.ma}">${sp.ten}</option>
+                        <option value="${sp.id}">${sp.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -23,7 +23,7 @@
                 <label class="form-label">Nhà Sản Xuất</label>
                 <select name="nsx" class="form-select">
                     <c:forEach items="${listNsx}" var="nsx">
-                        <option value="${nsx.ma}">${nsx.ten}</option>
+                        <option value="${nsx.id}">${nsx.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -33,15 +33,15 @@
                 <label class="form-label">Màu Sắc</label>
                 <select name="mauSac" class="form-select">
                     <c:forEach items="${listMauSac}" var="ms">
-                        <option value="${ms.ma}">${ms.ten}</option>
+                        <option value="${ms.id}">${ms.ten}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="col-6">
                 <label class="form-label">Dòng Sản Phẩm</label>
-                <select name="dongSanPham" class="form-select">
+                <select name="dongSp" class="form-select">
                     <c:forEach items="${listDongSanPham}" var="dongSp">
-                        <option value="${dongSp.ma}">${dongSp.ten}</option>
+                        <option value="${dongSp.id}">${dongSp.ten}</option>
                     </c:forEach>
                 </select>
             </div>

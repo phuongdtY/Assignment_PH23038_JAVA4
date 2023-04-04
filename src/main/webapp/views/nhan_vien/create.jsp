@@ -63,7 +63,7 @@
                 <label class="form-label">Cửa hàng</label>
                 <select name="cuaHang" class="form-select">
                     <c:forEach items="${listCuaHang}" var="ch">
-                        <option value="${ch.ma}">${ch.ten}</option>
+                        <option value="${ch.id}">${ch.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -77,7 +77,7 @@
                 <label class="form-label">Chức vụ</label>
                 <select name="chucVu" class="form-select">
                     <c:forEach items="${listChucVu}" var="cv">
-                        <option value="${cv.ma}">${cv.ten}</option>
+                        <option value="${cv.id}">${cv.ten}</option>
                     </c:forEach>
                 </select>
             </div>
