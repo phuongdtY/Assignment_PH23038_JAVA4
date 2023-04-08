@@ -7,16 +7,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
+import jakarta.validation.*;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import view_model.QLChucVu;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @WebServlet({
         "/chuc-vu/create",
@@ -106,21 +104,7 @@ public class ChucVuServlet extends HttpServlet {
         }
 
     }
-//    @RequestMapping(value = "/Assignment_PH23038_war_exploded/chuc-vu/create",
-//            method = RequestMethod.POST)
-//    public ModelAndView submit(@Valid @ModelAttribute("chucVu") ChucVu chucVu,
-//                               BindingResult result) {
-//
-//        if (result.hasErrors()) {
-//            return new ModelAndView("employeeForm");
-//        }
-//
-//        // Lưu thông tin employee vào cơ sở dữ liệu
-//        ChucVu DomainModeCv = new ChucVu();
-//        this.cvRepo.insert(DomainModeCv);
-//
-//        return new ModelAndView("employeeSuccess");
-//    }
+
 
     protected void store(
             HttpServletRequest request,
@@ -130,12 +114,40 @@ public class ChucVuServlet extends HttpServlet {
         try {
             ChucVu DomainModeCv = new ChucVu();
             BeanUtils.populate(DomainModeCv,request.getParameterMap());
-            this.cvRepo.insert(DomainModeCv);
+
+            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+            Validator validator = validatorFactory.getValidator();
+            Set<ConstraintViolation<ChucVu>> constraintViolations = validator.validate(DomainModeCv);
+            if (!constraintViolations.isEmpty()) {
+                String errMa = "";
+                String errTen = "";
+                for (ConstraintViolation<ChucVu> constraintViolation: constraintViolations) {
+                    if (constraintViolation.getPropertyPath().toString().equals("ma")){
+                        errMa = constraintViolation.getMessage();
+                    } else {
+                        errTen = constraintViolation.getMessage();
+                    }
+                }
+                request.setAttribute("chucVu", DomainModeCv);
+                request.setAttribute("errMa", errMa);
+                request.setAttribute("errTen", errTen);
+                request.setAttribute("view","/views/chuc_vu/create.jsp");
+                request.getRequestDispatcher("/views/layout.jsp")
+                        .forward(request,response);
+            } else {
+                this.cvRepo.insert(DomainModeCv);
+                request.removeAttribute("chucVu");
+                request.removeAttribute("errMa");
+                request.removeAttribute("errTen");
+                response.sendRedirect("/Assignment_PH23038_war_exploded/chuc-vu/index");
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/Assignment_PH23038_war_exploded/chuc-vu/index");
+
     }
 
     protected void update(

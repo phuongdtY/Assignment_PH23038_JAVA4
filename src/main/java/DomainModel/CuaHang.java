@@ -1,6 +1,8 @@
 package DomainModel;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,18 +27,23 @@ public class CuaHang {
     @Column(name = "Id" , columnDefinition="uniqueidentifier")
     private String id;
 
+    @Pattern(regexp = "^[a-zA-Z0-9]{4,9}$", message = "Mã không không có ký tự đặc biệt và mã dài 4-9 ký tự")
     @Column (name = "Ma")
     private String ma;
 
+    @NotEmpty(message = "không được để trống tên")
     @Column (name = "Ten")
     private String ten;
 
+    @NotEmpty(message = "không được để trống địa chỉ")
     @Column (name = "DiaChi")
     private String diaChi;
 
+    @NotEmpty(message = "không được để trống thanh phố")
     @Column (name = "ThanhPho")
     private String thanhPho;
 
+    @NotEmpty(message = "không được để trống quốc gia")
     @Column(name = "QuocGia")
     private String quocGia;
 

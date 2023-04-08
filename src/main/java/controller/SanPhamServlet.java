@@ -1,5 +1,7 @@
 package controller;
 
+import DomainModel.MauSac;
+import DomainModel.NhaSanXuat;
 import DomainModel.SanPham;
 import Repository.SanPhamRepository;
 import jakarta.servlet.ServletException;
@@ -7,10 +9,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.apache.commons.beanutils.BeanUtils;
 import view_model.QLSanPham;
 
 import java.io.IOException;
+import java.util.Set;
 
 @WebServlet({
         "/san-pham/create",
@@ -107,11 +114,37 @@ public class SanPhamServlet extends HttpServlet {
         try {
             SanPham DomainModelsp = new SanPham();
             BeanUtils.populate(DomainModelsp, request.getParameterMap());
-            this.spRepo.insert(DomainModelsp);
+
+            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+            Validator validator = validatorFactory.getValidator();
+            Set<ConstraintViolation<SanPham>> constraintViolations = validator.validate(DomainModelsp);
+            if (!constraintViolations.isEmpty()) {
+                String errMa = "";
+                String errTen = "";
+                for (ConstraintViolation<SanPham> constraintViolation: constraintViolations) {
+                    if (constraintViolation.getPropertyPath().toString().equals("ma")){
+                        errMa = constraintViolation.getMessage();
+                    } else {
+                        errTen = constraintViolation.getMessage();
+                    }
+                }
+                request.setAttribute("sp", DomainModelsp);
+                request.setAttribute("errMa", errMa);
+                request.setAttribute("errTen", errTen);
+                request.setAttribute("view","/views/san_pham/create.jsp");
+                request.getRequestDispatcher("/views/layout.jsp")
+                        .forward(request,response);
+            } else {
+                this.spRepo.insert(DomainModelsp);
+                request.removeAttribute("sp");
+                request.removeAttribute("errMa");
+                request.removeAttribute("errTen");
+                response.sendRedirect("/Assignment_PH23038_war_exploded/san-pham/index");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/Assignment_PH23038_war_exploded/san-pham/index");
     }
 
     protected void update(

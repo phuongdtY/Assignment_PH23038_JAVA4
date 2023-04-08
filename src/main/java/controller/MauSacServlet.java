@@ -1,5 +1,6 @@
 package controller;
 
+import DomainModel.DongSanPham;
 import DomainModel.MauSac;
 import Repository.MauSacRepository;
 import Utils.HibernateUtil;
@@ -8,11 +9,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.Session;
 import view_model.QLMauSac;
 
 import java.io.IOException;
+import java.util.Set;
 
 @WebServlet({
         "/mau-sac/create",
@@ -111,11 +117,36 @@ public class MauSacServlet extends HttpServlet {
         try {
             MauSac DomainModelMs = new MauSac();
             BeanUtils.populate(DomainModelMs, request.getParameterMap());
-            this.msRepo.insert(DomainModelMs);
+
+            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+            Validator validator = validatorFactory.getValidator();
+            Set<ConstraintViolation<MauSac>> constraintViolations = validator.validate(DomainModelMs);
+            if (!constraintViolations.isEmpty()) {
+                String errMa = "";
+                String errTen = "";
+                for (ConstraintViolation<MauSac> constraintViolation: constraintViolations) {
+                    if (constraintViolation.getPropertyPath().toString().equals("ma")){
+                        errMa = constraintViolation.getMessage();
+                    } else {
+                        errTen = constraintViolation.getMessage();
+                    }
+                }
+                request.setAttribute("mausac", DomainModelMs);
+                request.setAttribute("errMa", errMa);
+                request.setAttribute("errTen", errTen);
+                request.setAttribute("view","/views/mau_sac/create.jsp");
+                request.getRequestDispatcher("/views/layout.jsp")
+                        .forward(request,response);
+            } else {
+                this.msRepo.insert(DomainModelMs);
+                request.removeAttribute("mausac");
+                request.removeAttribute("errMa");
+                request.removeAttribute("errTen");
+                response.sendRedirect("/Assignment_PH23038_war_exploded/mau-sac/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/Assignment_PH23038_war_exploded/mau-sac/index");
 
     }
 

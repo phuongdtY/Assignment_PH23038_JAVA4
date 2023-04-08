@@ -1,5 +1,6 @@
 package controller;
 
+import DomainModel.MauSac;
 import DomainModel.NhaSanXuat;
 import Repository.NsxRepository;
 import jakarta.servlet.ServletException;
@@ -7,10 +8,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.apache.commons.beanutils.BeanUtils;
 import view_model.QLNSX;
 
 import java.io.IOException;
+import java.util.Set;
 
 @WebServlet({
         "/nsx/create",
@@ -108,11 +114,37 @@ public class NsxServlet extends HttpServlet {
         try {
             NhaSanXuat DomainModelnsx = new NhaSanXuat();
             BeanUtils.populate(DomainModelnsx,request.getParameterMap());
-            this.nsxRepo.insert(DomainModelnsx);
+
+            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+            Validator validator = validatorFactory.getValidator();
+            Set<ConstraintViolation<NhaSanXuat>> constraintViolations = validator.validate(DomainModelnsx);
+            if (!constraintViolations.isEmpty()) {
+                String errMa = "";
+                String errTen = "";
+                for (ConstraintViolation<NhaSanXuat> constraintViolation: constraintViolations) {
+                    if (constraintViolation.getPropertyPath().toString().equals("ma")){
+                        errMa = constraintViolation.getMessage();
+                    } else {
+                        errTen = constraintViolation.getMessage();
+                    }
+                }
+                request.setAttribute("nsx", DomainModelnsx);
+                request.setAttribute("errMa", errMa);
+                request.setAttribute("errTen", errTen);
+                request.setAttribute("view","/views/nsx/create.jsp");
+                request.getRequestDispatcher("/views/layout.jsp")
+                        .forward(request,response);
+            } else {
+                this.nsxRepo.insert(DomainModelnsx);
+                request.removeAttribute("nsx");
+                request.removeAttribute("errMa");
+                request.removeAttribute("errTen");
+                response.sendRedirect("/Assignment_PH23038_war_exploded/nsx/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-         response.sendRedirect("/Assignment_PH23038_war_exploded/nsx/index");
+
     }
 
     protected void update(

@@ -12,11 +12,11 @@ import java.io.IOException;
         "/nhan-vien/*",
         "/dong-san-pham/*",
         "/san-pham/*",
-        "/nha-san-xuat/*",
+        "/nsx/*",
         "/mau-sac/*",
         "/cua-hang/*",
         "/chuc-vu/*",
-//        "/chi-tiet-san-pham/*",
+        "/chi-tiet-san-pham/*",
         "/ban-hang/*"
 })
 public class AuthenFilter implements Filter {

@@ -13,7 +13,7 @@
         <div class="row mt-3">
             <div class="col-6">
                 <label class="form-label">Mã</label>
-                <input type="text" class="form-control" name="ma" value="${cv.ma}" />
+                <input type="text" class="form-control" name="ma" value="${cv.ma}" disabled />
             </div>
             <div class="col-6">
                 <label class="form-label">Tên</label>

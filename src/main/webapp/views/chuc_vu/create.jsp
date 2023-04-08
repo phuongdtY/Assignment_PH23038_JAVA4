@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: homna
@@ -6,25 +7,30 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="container">
     <h1 class="text-center">Chức vụ</h1>
     <form action="/Assignment_PH23038_war_exploded/chuc-vu/store" method="post">
-<%--        <form:form method="post" modelAttribute="chucVu">--%>
             <div class="row mt-3">
                 <div class="col-6">
                     <label class="form-label">Mã</label>
-                    <input type="text" class="form-control" name="ma" />
+                    <input type="text" class="form-control" name="ma" value="${chucVu.ma}" />
+                    <c:if test="${not empty errMa}">
+                        <div class="alert alert-danger">${errMa}</div>
+                    </c:if>
                 </div>
                 <div class="col-6">
                     <label class="form-label">Tên</label>
-                    <input type="text" class="form-control" name="ten" />
+                    <input type="text" class="form-control" name="ten" value="${chucVu.ten}" />
+                    <c:if test="${not empty errTen}">
+                        <div class="alert alert-danger">${errTen}</div>
+                    </c:if>
                 </div>
             </div>
             <div class="mt-3">
                 <button class="btn btn-primary" type="submit">save</button>
             </div>
-<%--        </form:form>--%>
+
     </form>
 </div>
 

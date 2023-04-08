@@ -12,15 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChucVuRepository {
-    private ArrayList<QLChucVu> list;
     private Session hSession;
 
     public ChucVuRepository() {
         this.hSession = HibernateUtil.getFACTORY().openSession();
-        list = new ArrayList<>();
 
-//        list.add(new QLChucVu("staff","nhân viên"));
-//        list.add(new QLChucVu("manage","quản lý"));
     }
 
     public void insert(ChucVu cv) {

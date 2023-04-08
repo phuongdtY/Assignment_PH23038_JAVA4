@@ -10,13 +10,13 @@ import lombok.*;
 public class QLKhachHang {
     private String ma;
     private String ho;
-    private String ten_dem;
+    private String tenDem;
     private String ten;
-    private String dia_chi;
+    private String diaChi;
     private String sdt;
-    private String mat_khau;
-    private String thanh_pho;
-    private String quoc_gia;
-    private String ngay_sinh;
+    private String matKhau;
+    private String thanhPho;
+    private String quocGia;
+    private String ngaySinh;
 
 }
